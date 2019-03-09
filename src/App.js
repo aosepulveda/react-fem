@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import pf from 'petfinder-client';
+import pf from "petfinder-client";
 import Pet from "./Pet";
 
 const petfinder = pf({
@@ -9,7 +9,7 @@ const petfinder = pf({
 });
 
 class App extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -18,7 +18,8 @@ class App extends React.Component {
   }
   componentDidMount() {
     //petfinder.breed.list({ animal: "dog" }).then(console.log, console.error);
-    petfinder.pet.find({ output: "full", location: "Seattle, WA" })
+    petfinder.pet
+      .find({ output: "full", location: "Seattle, WA" })
       .then(data => {
         let pets;
         if (data.petfinder.pets && data.petfinder.pets.pet) {
@@ -50,7 +51,14 @@ class App extends React.Component {
               breed = pet.breeds.breed;
             }
             return (
-              <Pet key={pet.id} name={pet.name} animal={pet.animal} breed={breed} />
+              <Pet
+                key={pet.id}
+                name={pet.name}
+                animal={pet.animal}
+                breed={breed}
+                media={pet.media}
+                location={`${pet.contact.city}, ${pet.contact.state}`}
+              />
             );
           })}
         </div>
